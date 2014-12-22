@@ -1,4 +1,4 @@
-import controlP5.*;
+//import controlP5.*;
 
 // M_1_5_03_TOOL.pde
 // Agent.pde, GUI.pde
@@ -40,7 +40,7 @@ float overlayAlpha = 10, agentsAlpha = 90, strokeWidth = 0.3;
 int drawMode = 1;
 
 // ------ ControlP5 ------
-ControlP5 controlP5;
+//ControlP5 controlP5;
 //boolean showGUI = false;
 Slider[] sliders;
 
@@ -74,23 +74,19 @@ void draw(){
  // drawGUI();
 }
 
-/*void keyReleased(){
-  if (key=='m' || key=='M') {
+void keyReleased(){
+/*  if (key=='m' || key=='M') {
     showGUI = controlP5.group("menu").isOpen();
     showGUI = !showGUI;
   }
   if (showGUI) controlP5.group("menu").open();
   else controlP5.group("menu").close();
-
+*/
   if (key == '1') drawMode = 1;
   if (key == '2') drawMode = 2;
  // if (key=='s' || key=='S') saveFrame(timestamp()+".png");
   if (key == DELETE || key == BACKSPACE) background(255);
-}
-
-//String timestamp() {
-//  return String.format("%1$ty%1$tm%1$td_%1$tH%1$tM%1$tS", Calendar.getInstance());
-//} */
+} 
 
 
 
