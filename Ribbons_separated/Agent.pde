@@ -19,21 +19,22 @@
 
 class Agent {
   PVector p, pOld;
-  float noiseZ, noiseZVelocity = 0.01;
+  float noiseZ, noiseStrength, noiseZVelocity = 0.01;
   float stepSize, angle;
   color stroke;
 
-  Agent(color _stroke) {
-    p = new PVector(random(width),random(height));
-    pOld = new PVector(p.x,p.y);
-    stepSize = random(1,5);
+  Agent(color _stroke, float _noiseZ, float _noiseStrength) {
+    p = new PVector(random(width), random(height));
+    pOld = new PVector(p.x, p.y);
+    stepSize = random(1, 5);
     // init noiseZ
-    setNoiseZRange(0.4);
     stroke = _stroke;
-    
+    noiseZ = _noiseZ;
+    noiseStrength= _noiseStrength;
+    setNoiseZRange(noiseZ);
   }
 
-  void update(){
+  void update() {
     angle = noise(p.x/noiseScale, p.y/noiseScale, noiseZ) * noiseStrength;
 
     p.x += cos(angle) * stepSize;
@@ -46,7 +47,7 @@ class Agent {
     if (p.y>height+10) p.y=pOld.y=-10;
     stroke(stroke);
     strokeWeight(strokeWidth*stepSize);
-    line(pOld.x,pOld.y, p.x,p.y);
+    line(pOld.x, pOld.y, p.x, p.y);
 
     pOld.set(p);
     noiseZ += noiseZVelocity;
@@ -58,7 +59,6 @@ class Agent {
     noiseZ = random(theNoiseZRange);
   }
 }
-
 
 
 

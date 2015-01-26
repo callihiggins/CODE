@@ -12,7 +12,8 @@ class Box {
   float h;
   String sentence;
   Boolean hit;
-
+  color [] colors = new color[5];
+  int colorindex;
   // Constructor
   Box(float x, float y, float w_, float h_, String sentence_) {
     w = w_;
@@ -21,6 +22,14 @@ class Box {
     // Add the box to the box2d world
     makeBody(new Vec2(x, y), w, h);
     hit = false;
+    
+    //FONT COLORS
+    colors[0] = color(255, 17, 105);
+    colors[1] = color(17, 255, 31);
+    colors[2] = color(255, 148, 17);
+    colors[3] = color(255);
+    colors[4] = color(17, 210, 255);
+    colorindex = int(random(5));
   }
 
   // This function removes the particle from the box2d world
@@ -40,17 +49,17 @@ class Box {
     pushMatrix();
     translate(pos.x, pos.y);
     rotate(-a);
-    fill(255);
+    fill(colors[colorindex]);
     //stroke(0);
     textFont(f);
     text(sentence, 0, 0, w, h);
     noFill();
     stroke(255);
-//    rect(0, 0, w, h);
+    //    rect(0, 0, w, h);
     popMatrix();
   }
-  
-  Vec2 returnLocation(){
+
+  Vec2 returnLocation() {
     Vec2 pos = box2d.getBodyPixelCoord(body);
     return pos;
   }
@@ -65,7 +74,10 @@ class Box {
   }
 
   void collision() {
-    hit = true;
+    Vec2 pos = box2d.getBodyPixelCoord(body);
+    if (pos.y > height/3) {
+      hit = true;
+    }
   }
 
   // This function adds the rectangle to the box2d world
@@ -81,7 +93,7 @@ class Box {
     FixtureDef fd = new FixtureDef();
     fd.shape = sd;
     // Parameters that affect physics
-    fd.density = 1;
+    fd.density = 5;
     fd.friction = 0.3;
     fd.restitution = 0.5;
 

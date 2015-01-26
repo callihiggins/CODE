@@ -1,6 +1,95 @@
-In The Passion Of The Christ 2, Jesus gets raped by a pack of niggers. It's his own fault for dressing like a whore though.
-aw, you can't feed your family on minimum wage? well who told you to start a fucking family when your skills are only worth minimum wage?
-feminism in tech remains the champion topic for my block list. my finger is getting tired.
-so he's a woman, but he still has Y chromosomes? now who doesn't understand how biology works?at least if we end up getting into a nuclear standoff with Russia over gay rights we'll know this universe is just a satirical simulation
-IMO if gay activists protest the Olympics in Russia it's going to get VERY ugly. They think its just a game but Putin knows the real stakes.
-Who has more dedication, ambition, and drive? Kobe only raped one girl, Lebron raped an entire city. +1 for Lebron.
+if (random(5) < 0.1 && boxes.size()-1 < data.length && !stop) {
+Box p = new Box(random(0, width), 30, 600, 60, data[counter]);
+boxes.add(p)
+counter++;
+if (counter == data.length - 1) stop = true;
+for (int i = boxes.size()-1; i >= 0; i--) {
+Box b = boxes.get(i);
+b.display();
+Vec2 v = b.returnLocation();
+float x = v.x;
+float y = v.y;
+if (b.done()) {
+boxes.remove(i);
+String sentence = b.sentence;
+String [] words = sentence.split(" ");
+for (int j=0; j < words.length; j++) {
+Box sb = new SmallBox(x,y, textWidth(words[j]), 20, words[j]);
+boxes.add(sb);
+for (Boundary wall : boundaries) {
+wall.display();
+Fixture f1 = cp.getFixtureA();
+Fixture f2 = cp.getFixtureB();
+Body b1 = f1.getBody();
+Body b2 = f2.getBody();
+Object o1 = b1.getUserData();
+Object o2 = b2.getUserData();
+if (o1.getClass() == Box.class && o2.getClass() == BottomBoundary.class 
+||   o1.getClass() == Box.class && o2.getClass() == SmallBox.class) {
+Box box = (Box) o1;
+box.collision();
+  } else if (o1.getClass() == BottomBoundary.class && o2.getClass() == 
+Box.class ||   o2.getClass() == Box.class && o1.getClass() == SmallBox.class) {
+Box box = (Box) o2;
+box.collision();
+Boundary(float x_,float y_, float w_, float h_) {
+x = x_;
+y = y_;
+w = w_;
+h = h_;
+PolygonShape sd = new PolygonShape();
+float box2dW = box2d.scalarPixelsToWorld(w/2);
+float box2dH = box2d.scalarPixelsToWorld(h/2);
+sd.setAsBox(box2dW, box2dH);
+BodyDef bd = new BodyDef();
+bd.type = BodyType.STATIC;
+bd.position.set(box2d.coordPixelsToWorld(x,y));
+b = box2d.createBody(bd);
+b.createFixture(sd,1);
+b.setUserData(this);
+void display() {
+fill(0);
+stroke(0);
+rectMode(CENTER);
+rect(x,y,w,h);
+Body body;
+float w;
+float h;
+String sentence;
+Boolean hit;
+Box(float x, float y, float w_, float h_, String sentence_) {
+w = w_;
+h = h_;
+sentence = sentence_;
+makeBody(new Vec2(x, y), w, h);
+hit = false;
+Vec2 pos = box2d.getBodyPixelCoord(body);
+float a = body.getAngle();
+pushMatrix();
+translate(pos.x, pos.y);
+rotate(-a);
+fill(255);
+textFont(f);
+text(sentence, 0, 0, w, h);
+noFill();
+stroke(255);
+rect(0, 0, w, h);
+popMatrix();
+angle = noise(p.x/noiseScale, p.y/noiseScale, noiseZ) * noiseStrength;
+p.x += cos(angle) * stepSize;
+p.y += sin(angle) * stepSize;
+if (p.x<-10) p.x=pOld.x=width+10;
+if (p.x>width+10) p.x=pOld.x=-10;
+if (p.y<-10) p.y=pOld.y=height+10;
+if (p.y>height+10) p.y=pOld.y=-10;
+stroke(stroke);
+strokeWeight(strokeWidth*stepSize);
+line(pOld.x,pOld.y, p.x,p.y);
+pOld.set(p);
+noiseZ += noiseZVelocity;
+p = new PVector(random(width),random(height));
+pOld = new PVector(p.x,p.y);
+stepSize = random(1,5);
+setNoiseZRange(0.4);
+stroke = _stroke;
+

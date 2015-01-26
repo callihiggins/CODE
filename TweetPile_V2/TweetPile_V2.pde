@@ -27,14 +27,14 @@ ArrayList<Boundary> boundaries;
 ArrayList<Box> boxes;
 
 void setup() {
-  size(1280, 720, P3D);
+  size(720, 400, P3D);
   smooth();
-  f = loadFont("Serif-18.vlw");
+  f = loadFont("Monospaced-12.vlw");
   // Initialize box2d physics and create the world
   box2d = new PBox2D(this);
   box2d.createWorld();
   // We are setting a custom gravity
-  box2d.setGravity(0, -10);
+  box2d.setGravity(0, -30);
 
   // Turn on collision listening!
   box2d.listenForCollisions();
@@ -44,17 +44,17 @@ void setup() {
   boundaries = new ArrayList<Boundary>();
   data = loadStrings("data.txt");
   // Add a bunch of fixed boundaries
-  boundaries.add(new BottomBoundary(0, height+10, width*2, 10));
-  boundaries.add(new Boundary(0, -20, 40, height*2 + 40));
+  boundaries.add(new BottomBoundary(0, height, width*2, 10));
+  boundaries.add(new Boundary(0, 20, 40, height*2 + 40));
   boundaries.add(new Boundary(width, 0, 10, height*2));
 }
 
 void draw() {
   background(0);
 
-  // Boxes fall from the top every so often
-  if (random(5) < 0.1 && boxes.size()-1 < data.length && !stop) {
-    Box p = new Box(random(0, width), 30, 600, 60, data[counter]);
+  // ADJUST RANDOM # TO MAKE THEM FALL MORE OR LESS FREQUENTLY
+  if (random(2) < 0.1 && !stop) {
+    Box p = new Box(random(0, width), 20, textWidth(data[counter]), 20, data[counter]);
     boxes.add(p);
     counter++;
     if (counter == data.length - 1) stop = true;
@@ -76,7 +76,7 @@ void draw() {
     if (b.done()) {
       boxes.remove(i);
       String sentence = b.sentence;
-      String [] words = sentence.split(" ");
+      String [] words = splitTokens(sentence, " <>*/.,:()= ");
       
       for (int j=0; j < words.length; j++) {
         Box sb = new SmallBox(x,y, textWidth(words[j]), 20, words[j]);
@@ -105,13 +105,21 @@ void beginContact(Contact cp) {
   Object o2 = b2.getUserData();
   //  println(o1);
 
+ /* if (o1.getClass() == Box.class && o2.getClass() == BottomBoundary.class ) {
+    Box box = (Box) o1;
+    box.collision();
+  } else if (o1.getClass() == BottomBoundary.class && o2.getClass() == Box.class ) {
+    Box box = (Box) o2;
+    box.collision();
+  } */
+
   if (o1.getClass() == Box.class && o2.getClass() == BottomBoundary.class ||   o1.getClass() == Box.class && o2.getClass() == SmallBox.class) {
     Box box = (Box) o1;
     box.collision();
   } else if (o1.getClass() == BottomBoundary.class && o2.getClass() == Box.class ||   o2.getClass() == Box.class && o1.getClass() == SmallBox.class) {
     Box box = (Box) o2;
     box.collision();
-  }
+  } 
 }
 // Objects stop touching each other
 void endContact(Contact cp) {

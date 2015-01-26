@@ -17,20 +17,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // ------ agents ------
-Agent[] agents = new Agent[10000]; // create more ... to fit max slider agentsCount
-int agentsCount = 4000;
-float noiseScale = 100, noiseStrength = 10, noiseZRange = 0.4;
+
+Agent[] agentsBlue = new Agent[1500]; // Make more than we display so we can increase if needed
+Agent[] agentsRed = new Agent[500]; // Aiming for 2000 total agents, 75% Blue, 25% Red
+
+//Start out with 1000 agents, 75% Blue, 25% Red
+int agentsCountBlue = 750;
+int agentsCountRed = 250;
+
+float noiseScale = 100;
 float overlayAlpha = 10, agentsAlpha = 90, strokeWidth = 0.3;
 
 
 void setup() {
   size(1280, 800, P2D);
   smooth();
-
-  //Red agents at 75%
-  for (int i=0; i<(agents.length * .75); i++) agents[i] = new Agent(color(255, 0, 0, agentsAlpha));
-  //Blue agents at 25%
-  for (int i=0; i<(agents.length * .25); i++) agents[i] = new Agent(color(0, 0, 255, agentsAlpha));
+  //Adjust colors if needed
+  for (int i=0; i<agentsRed.length; i++) agentsRed[i] = new Agent(color(255, 0, 0, agentsAlpha), .2, 10);
+  for (int i=0; i<agentsBlue.length; i++) agentsBlue[i] = new Agent(color(0, 0, 255, agentsAlpha), .6, 20);
 }
 
 void draw() {
@@ -39,10 +43,12 @@ void draw() {
   rect(0, 0, width, height);
 
   //draw agents
-  for (int i=0; i<agentsCount; i++) agents[i].update();
+  for (int i=0; i<agentsCountRed; i++) agentsRed[i].update();
+  for (int i=0; i<agentsCountBlue; i++) agentsBlue[i].update();
 
  // TURN ME ON TO INCREASE NUMBER OF RIBBONS OVER TIME
- // if (agentsCount < (agents.length-11))  agentsCount += 10;
+ // if (agentsCountRed < (agentsRed.length-11))  agentsCountRed += 10;
+ // if (agentsCountBlue < (agentsBlue.length-11))  agentsCountBlue += 10;
 }
 
 void keyReleased() {
