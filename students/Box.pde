@@ -17,7 +17,7 @@ class Box {
     h = 115;
     // Add the box to the box2d world
     makeBody(new Vec2(x, y), w, h);
-    student = loadImage("student.jpg");
+    student = loadImage("student.png");
   }
 
   // This function removes the particle from the box2d world
@@ -72,7 +72,7 @@ class Box {
     // Parameters that affect physics
     fd.density = 5;
     fd.friction = 0.3;
-    fd.restitution = 0.5;
+    fd.restitution = 0.1;
 
     // Define the body and make it from the shape
     BodyDef bd = new BodyDef();

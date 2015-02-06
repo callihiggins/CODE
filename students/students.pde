@@ -60,7 +60,7 @@ void setup() {
 }
 
 void draw() {
-  background(0);
+  background(255);
 
   // We must always step through time!
   box2d.step();
