@@ -13,8 +13,8 @@ class Box {
   PImage student;
   // Constructor
   Box(float x, float y) {
-    w = 50;
-    h = 115;
+    w = 45;
+    h = 110;
     // Add the box to the box2d world
     makeBody(new Vec2(x, y), w, h);
     student = loadImage("student.png");
@@ -72,7 +72,7 @@ class Box {
     // Parameters that affect physics
     fd.density = 5;
     fd.friction = 0.3;
-    fd.restitution = 0.1;
+    fd.restitution = 0.3;
 
     // Define the body and make it from the shape
     BodyDef bd = new BodyDef();
