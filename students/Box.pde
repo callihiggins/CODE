@@ -13,10 +13,10 @@ class Box {
   PImage student;
   // Constructor
   Box(float x, float y) {
-    w = 45;
-    h = 110;
+    w = 65;
+    h = 130;
     // Add the box to the box2d world
-    makeBody(new Vec2(x, y), w, h);
+    makeBody(new Vec2(x, y), w - 20, h - 20);
     student = loadImage("student.png");
   }
 
@@ -51,7 +51,7 @@ class Box {
     rotate(-a);
     fill(175);
     
-    image(student, 0, 0, 65, 130);
+    image(student, 0, 0, w, h);
 //    stroke(255);
 //    rect(0, 0, w, h);
     popMatrix();
